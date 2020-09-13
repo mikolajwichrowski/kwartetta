@@ -1,0 +1,38 @@
+body {
+  background-color: whitesmoke;
+  border: 3px solid black;
+  margin:0;
+  padding:0;
+  height:100%;
+}
+
+h1{
+  color: limegreen;
+}
+
+h2{
+  color: lightcoral;
+}
+
+.singleCard{
+  height: 198px;
+  width: 129px;
+}
+
+.hand{
+  position: absolute;
+  bottom:20px;
+  left: 50%;
+}
+
+.closedCards{
+  position: absolute;
+  left: 35%;
+  top: 30%;
+}
+
+.openCard{
+  position: absolute;
+  left: 60%;
+  top: 30%;
+}
