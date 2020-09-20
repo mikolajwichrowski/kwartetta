@@ -4,7 +4,7 @@ import Card from './Card';
 function ClosedCards(){
     return(
         <div className='closedCards'>
-            <div><Card  card={"back"}/></div>
+            <img className = "singleCard" src='images/purple_back.png' alt="playingcard"/>
         </div>
         
     );

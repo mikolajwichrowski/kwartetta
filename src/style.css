@@ -1,9 +1,8 @@
 body {
-  background-color: whitesmoke;
-  border: 3px solid black;
-  margin:0;
-  padding:0;
-  height:100%;
+  float: left;
+  height: 100%;
+  width: 100%;
+  background-color: yellow;
 }
 
 h1{
@@ -14,25 +13,60 @@ h2{
   color: lightcoral;
 }
 
+.closedCards{
+  float: left;
+  width: 50%
+}
+
+.openCard{
+  position: left;
+  left: 60%;
+  top: 30%;
+}
+
 .singleCard{
   height: 198px;
   width: 129px;
 }
 
-.hand{
-  position: absolute;
-  bottom:20px;
-  left: 50%;
+
+.PlayingField{
+  float: left;
+  width: 100%;
+  height: 30vh;
 }
 
 .closedCards{
-  position: absolute;
-  left: 35%;
-  top: 30%;
+  float: left;
+  width: 50%;
+  height: 30vh;
+  text-align: right
 }
 
 .openCard{
-  position: absolute;
-  left: 60%;
-  top: 30%;
+  float: left;
+  width: 50%;
+  height:30vh;
+}
+
+.takeCard{
+  float: left;
+  width: 50%;
+  text-align: left;
+}
+
+.newCard{
+  float: left;
+  width: 50%;
+  text-align: right;
+}
+
+.hand{
+  float: left;
+  width: 100%;
+  text-align: center;
+}
+
+.buttonHand{
+  text-align: center;
 }
