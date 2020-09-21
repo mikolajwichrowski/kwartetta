@@ -17,6 +17,7 @@ class App extends React.Component{
         OpenCard: null, 
         BurnedCards:[],
         PlayField: [],
+        SelectedCard: []
       };
     }
     
@@ -45,7 +46,7 @@ class App extends React.Component{
     turnCard =()=>{
       //Get the latest open card and append to burned cards
       if(!this.state.ShuffledDeck.length){
-        //TODO: game conditions
+        //game conditions
         alert("deck is leeg jongen")
       }else{
         this.setState({
@@ -73,6 +74,14 @@ class App extends React.Component{
       console.log(this.state)
     }
 
+    // selectCard=() =>{
+    //   if(this.state.CardsInHand.length > 4){
+    //     alert("You cannot select more then 4 cards")
+    //   }else{
+        
+    //   }
+    // }
+
     render(){
       return(
         <div>
@@ -96,3 +105,26 @@ class App extends React.Component{
 
 export default App;
   
+
+    //Voor de shuffle maak ik gebruik van de fisher-yates formule: https://www.wikiwand.com/en/Fisher%E2%80%93Yates_shuffle#/The_modern_algorithm
+    //de implementatie heb ik gevonden op stackoverflow: https://stackoverflow.com/questions/6274339/how-can-i-shuffle-an-array
+
+    
+  //   const cardComponents = images.map(item => <Card key={item.id} card={item}/>)
+
+  //   var cardsInDeck = shuffle(images);;
+  //   var cardsInHand = [];
+  //   var cardsBurned = [];
+  //   var closedCard = cardComponents.filter(card=> card.type==="back")
+  //   var cardOpen;
+
+  //   return (
+  //     <div className="speelveld">
+  //       {closedCard}
+  //       <Hand />
+  //       <ClosedCards/>
+  //       <OpenCard />
+  //       <BurnedCards />
+  //     </div>
+  //   );
+  // }

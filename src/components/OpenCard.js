@@ -12,9 +12,12 @@ function OpenCard(props){
        
     }else{
         return(
-            <div className="openCard">
-               <Card {...props.openCard}/>
+            <div>
+                <div className="openCard">
+                    <Card {...props.openCard}/>
+                </div>
             </div>
+           
         );
     }
     

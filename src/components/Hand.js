@@ -8,10 +8,9 @@ function Hand(props){
 
     let burnedCards = props.burnedCard;
     let cardsInHand = props.cardsInHand;
-    let selectedCards = [];
 
     const cardComponent = props.cardsInHand.map(singleCard => <Card key={singleCard.Id} src={singleCard.src} card={singleCard.card} type={singleCard.type} selectable={singleCard.selectebale}/>);
-
+    
     return(
         <div className="hand">
             {cardComponent}

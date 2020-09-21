@@ -18,12 +18,6 @@ h2{
   width: 50%
 }
 
-.openCard{
-  position: left;
-  left: 60%;
-  top: 30%;
-}
-
 .singleCard{
   height: 198px;
   width: 129px;
@@ -34,6 +28,11 @@ h2{
   float: left;
   width: 100%;
   height: 30vh;
+}
+
+.burnedCards{
+  float: left;
+  width: 25%;
 }
 
 .closedCards{
