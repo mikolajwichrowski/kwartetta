@@ -18,12 +18,6 @@ h2{
   width: 50%
 }
 
-.singleCard{
-  height: 198px;
-  width: 129px;
-}
-
-
 .PlayingField{
   float: left;
   width: 100%;
@@ -67,5 +61,25 @@ h2{
 }
 
 .buttonHand{
+  text-align: center;
+}
+
+.ulList{
+  display:inline;
+  padding: 0;
+}
+
+.singleCard{
+  height: 198px;
+  width: 129px;
+}
+
+.selectedCard{
+  height: 198px;
+  width: 129px;
+  border: 2px solid black;
+}
+
+.buttonNewGame{
   text-align: center;
 }
