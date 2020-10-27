@@ -14,8 +14,8 @@ class App extends React.Component{
         CardsInHand: [],
         OpenCard: null, 
         BurnedCards:[],
-        PlayField: [],
-        CanBurn: true
+        Quartets: [],
+        CanBurn: true,
       };
     }
     
@@ -40,7 +40,8 @@ class App extends React.Component{
         OpenCard: openCard,
         BurnedCards:[],
         PlayField: [],
-        Quartets: []
+        Quartets: [],
+        CanBurn: true,
       });
     }
     
@@ -48,7 +49,10 @@ class App extends React.Component{
       //Get the latest open card and append to burned cards
       if(!this.state.ShuffledDeck.length){
         //game conditions
-        alert("deck is leeg jongen")
+        this.setState({
+          ErrorMessage: ["EMPTYDECK"]
+        })
+        alert("De kaarten zijn op")
       }else{
         this.setState({
           BurnedCards: this.state.BurnedCards.concat(this.state.OpenCard),
@@ -61,9 +65,15 @@ class App extends React.Component{
       if(!this.state.CanBurn){
         if(!this.state.ShuffledDeck.length){
           //game conditions
-          alert("The deck is empty")
+          this.setState({
+            ErrorMessage: ["GAMEDONE", this.state.Quartets.length]
+          })
+          alert("Het spel is afgelopen je hebt " + this.state.Quartets.length + " kwartetten")
         }else if(this.state.CardsInHand.length >= 8){
-          alert("You cannot have more then 8 cards in your hand, pleace place a quartet or burn a card")
+          this.setState({
+            ErrorMessage: ["MORETHEN8CARDS"]
+          })
+          alert("Je kan niet meer dan 8 kaarten in je hand hebben.")
         }else{
           this.setState({
             CardsInHand: this.state.CardsInHand.concat(this.state.OpenCard),
@@ -72,7 +82,10 @@ class App extends React.Component{
           });
         }
       }else{
-        alert("Je moet eerst burnen jonguh")
+        this.setState({
+          ErrorMessage: ["BURNCARD"]
+        })
+        alert("Je moet eerst een kaart wegleggen")
       }
     }
 
@@ -86,12 +99,20 @@ class App extends React.Component{
             CanBurn: false
           })
         }else if(selectedCards.length === 0){
-          console.log("You did not select a card")
+          this.setState({
+            ErrorMessage: ["NOCARDSELECTED"]
+          })
+          alert("Je hebt geen kaart geselecteerd.")
         }else{
-          console.log("You selected to many cards, you can only burn one.")
+          this.setState({
+            ErrorMessage: ["TOMUCHSELECTED"]
+          })
+          alert("Je hebt te veel kaarten geselecteerd")
         }
       }else{
-        alert("Eerst pakken dan burnen G")
+        this.setState({
+          ErrorMessage: ["PICKCARD"]
+        })
       }
       this.deselectCards(selectedCards);
     }
@@ -100,9 +121,15 @@ class App extends React.Component{
       var cardNumber = selectedCards[0].card;
       var cardCounter = 0;
       if(selectedCards.length < 4){
-        alert("You didn't select enough cards for a quartet")
+        this.setState({
+          ErrorMessage: ["NOTENOUGHQUARTET"]
+        })
+        alert("Je hebt niet genoeg kaarten voor een kwartet geselecteerd.")
       }else if(selectedCards.length > 4){
-        alert("Te veel kaarten voor kwartet neef")
+        this.setState({
+          ErrorMessage: ["TOMUCHCARDFORQUARTET"]
+        })
+        alert("Een kwartet kan alleen uit 4 kaarten bestaan, je hebt er te veel geselecteerd.")
       }else{
         for(var i = 0; i < selectedCards.length; i++){
           if(selectedCards[i].card === cardNumber){
@@ -111,7 +138,6 @@ class App extends React.Component{
         }
       }
       if(cardCounter === 4){
-        alert("JE HEBT EEN BINGO")
         var cardsInHandCopy = this.state.CardsInHand
         for(var j = 0; j < selectedCards.length; j++){
           const index = cardsInHandCopy.findIndex(d => d.id === selectedCards[j].id);
@@ -121,10 +147,21 @@ class App extends React.Component{
         }
         this.setState({
           CardsInHand: cardsInHandCopy,
-          Quartets: this.state.Quartets.concat([selectedCards])
+          Quartets: this.state.Quartets.concat([selectedCards]),
+          ErrorMessage: ["QUARTET"]
         }) 
+        alert("Je hebt een kwartet!")
+        if(!cardsInHandCopy.length){
+          this.setState({
+            ErrorMessage: ["GAMEFINISH", this.state.Quartets.length ]
+          })
+          alert("Het spel is afgelopen, je hebt " + this.state.Quartets.length + " kwartetten met nog " + this.state.ShuffledDeck.length + " kaarten in het spel")
+        }
       }else{
         alert("VALSE BINGO G")
+        this.setState({
+          ErrorMessage: ["FALSEQUARTET"]
+        })
       }
       this.deselectCards(selectedCards);
     }
@@ -139,7 +176,10 @@ class App extends React.Component{
       var cardsInHandCopy = this.state.CardsInHand
       const index = cardsInHandCopy.findIndex(card => card.id === selectedCards[0].id);
       if(index === 0 || selectedCards.length > 1){
-        alert("Je kan niet verder naar links")
+        this.setState({
+          ErrorMessage: ["CANNOTGOLEFT"]
+        })
+        alert("Je kan niet nog verder naar links")
       }else{
         var tempcard = cardsInHandCopy[index - 1];
         cardsInHandCopy[index - 1] = selectedCards[0]; 
@@ -155,7 +195,10 @@ class App extends React.Component{
       var cardsInHandCopy = this.state.CardsInHand
       const index = cardsInHandCopy.findIndex(card => card.id === selectedCards[0].id);
       if(index === cardsInHandCopy.length - 1 || selectedCards.length > 1){
-        alert("Je kan niet verder naar rechts")
+        this.setState({
+          ErrorMessage: ["CANNOTGORIGTH"]
+        })
+        alert("Je kan niet nog verder naar rechts")
       }else{
         var tempcard = cardsInHandCopy[index + 1];
         cardsInHandCopy[index + 1] = selectedCards[0]; 
@@ -170,19 +213,19 @@ class App extends React.Component{
     render(){
       return(
         <div>
-          <button type="buttonNewGame" onClick={this.startGame}>Start new game</button>
-          <PlayingField playingField={this.state.PlayField}/>
-          <ClosedCards/>
-          <OpenCard openCard={this.state.OpenCard}/>
-          <div className = "newCard">
-            <button type="button" onClick={this.turnCard}>New card</button>
+          <PlayingField quartets={this.state.Quartets}/>
+          <div className="openCloseCard">
+            <ClosedCards/>
+            <OpenCard openCard={this.state.OpenCard}/>
+            <div className = "buttonNewGame">
+              <button type="button" onClick={this.startGame}>Start new game</button>
+            </div>
+            <div className = "takeCard">
+              <button disabled={this.state.CanBurn || this.state.CardsInHand < 8} type="button" onClick={this.takeCard}>Take card</button>
+            </div>
           </div>
-          <div className = "takeCard">
-            <button type="button" onClick={this.takeCard}>Take card</button>
-          </div>
-          <Hand cardsInHand={this.state.CardsInHand} burnedCard={this.state.BurnedCards} burnCardFunction={this.burnCard} placeQuartetFunction={this.placeQuartet} shiftLeft={this.shiftLeft} shiftRight={this.shiftRight}/>
+          <Hand cardsInHand={this.state.CardsInHand} burnedCard={this.state.BurnedCards} burnCardFunction={this.burnCard} placeQuartetFunction={this.placeQuartet} shiftLeft={this.shiftLeft} shiftRight={this.shiftRight} canBurn={this.state.CanBurn}/>
         </div>
-        
       )
     }
 

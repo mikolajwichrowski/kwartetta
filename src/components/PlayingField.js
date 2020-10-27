@@ -14,8 +14,14 @@ class PlayingField extends React.Component{
     render(){
         return(
             <div className="PlayingField">
-                {JSON.stringify(this.props)}
+                <h1>Quartets: </h1>
+                {this.props.quartets.map((quartet, index) => (
+                <ul className ="ulListPlayingField">
+                  {quartet.map((singleCard, index) =><div className="cardInPlayfield"><img className = "singleCard" src={singleCard.src} alt="playingcard"/></div> )}
+                </ul>
+              ))}
             </div>
+
             
         );
     }

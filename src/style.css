@@ -6,7 +6,8 @@ body {
 }
 
 h1{
-  color: limegreen;
+  text-align: center;
+  color: black;
 }
 
 h2{
@@ -21,7 +22,8 @@ h2{
 .PlayingField{
   float: left;
   width: 100%;
-  height: 30vh;
+  height: 40vh;
+  border-style: solid;
 }
 
 .burnedCards{
@@ -29,17 +31,22 @@ h2{
   width: 25%;
 }
 
+.openClosedCard{
+  float: left;
+  height: 30vh;
+  border: 2px solid black;
+}
+
 .closedCards{
   float: left;
   width: 50%;
-  height: 30vh;
   text-align: right
 }
 
 .openCard{
   float: left;
   width: 50%;
-  height:30vh;
+  text-align: left
 }
 
 .takeCard{
@@ -48,7 +55,7 @@ h2{
   text-align: left;
 }
 
-.newCard{
+.buttonNewGame{
   float: left;
   width: 50%;
   text-align: right;
@@ -61,7 +68,7 @@ h2{
 }
 
 .buttonHand{
-  text-align: center;
+  align-items: center;
 }
 
 .ulList{
@@ -69,9 +76,22 @@ h2{
   padding: 0;
 }
 
+.ulListPlayingField{
+  display:inline;
+  padding: 0;
+  margin-right: 25px;
+}
+
+
 .singleCard{
   height: 198px;
   width: 129px;
+}
+
+.cardInPlayfield{
+  display:inline;
+  padding: -10;
+  margin-left: -10;
 }
 
 .selectedCard{
@@ -80,6 +100,8 @@ h2{
   border: 2px solid black;
 }
 
-.buttonNewGame{
-  text-align: center;
+
+
+.listQuartets{
+  display:inline;
 }
