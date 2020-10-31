@@ -8,11 +8,15 @@ class Hand extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            selectedCards: []
+            selectedCards: [],
+        }
+        if(props.refresh === true){
+            this.state ={
+                selectedCards: [],
+            }
         }
     }
 
-    //Werkt nog niet helemaal zoals het zou moeten werken.
     selectCard = (card) => {
         if(!card.selected === true){
             card.selected = true;
@@ -63,10 +67,34 @@ class Hand extends React.Component{
                         <Card key={singleCard.id} src={singleCard.src} card={singleCard.card} type={singleCard.type} selected={singleCard.selected}/>
                     </ul>)}
                 <div>
-                    <button className="buttonHand" disabled={this.props.cardsInHand.length === 0 ? true : false} onClick={this.shiftLeft}>&lt;&lt;&lt;</button>
-                    <button className="buttonHand" disabled={!this.props.canBurn || this.props.cardsInHand.length === 0 ? true : false || this.state.selectedCards.length > 1 ? true : false } onClick = {this.burnTheCard}>Burn card</button>
-                    <button className="buttonHand" disabled={this.state.selectedCards.length === 4 ? false : true} onClick = {this.placeQuartet}>Place Quartet</button>
-                    <button className="buttonHand" disabled={this.props.cardsInHand.length === 0 ? true : false} onClick = {this.shiftRight}>&gt;&gt;&gt;</button>
+                    <button className="buttonHand" 
+                        disabled={this.props.cardsInHand.length === 0 || 
+                            this.state.selectedCards[0] === this.props.cardsInHand[0] ||
+                            this.state.selectedCards.length  > 1 ||
+                            this.state.selectedCards.length === 0 ? true : false} 
+                        onClick={this.shiftLeft}>
+                        &lt;&lt;&lt;
+                    </button>
+                    <button className="buttonHand" 
+                        disabled={!this.props.canBurn || 
+                            this.props.cardsInHand.length === 0 ? true : false || 
+                            this.state.selectedCards.length > 1 ? true : false } 
+                        onClick = {this.burnTheCard}>
+                        Burn card
+                    </button>
+                    <button className="buttonHand" 
+                        disabled={this.state.selectedCards.length === 4 ? false : true} 
+                        onClick = {this.placeQuartet}>
+                        Place Quartet
+                    </button>
+                    <button className="buttonHand" 
+                        disabled={this.props.cardsInHand.length === 0 || 
+                            this.state.selectedCards[this.state.selectedCards.length - 1] === this.props.cardsInHand[this.props.cardsInHand.length - 1] || 
+                            this.state.selectedCards.length === 0 || 
+                            this.state.selectedCards.length  > 1 ? true : false} 
+                        onClick = {this.shiftRight}>
+                        &gt;&gt;&gt;
+                    </button>
                 </div>
             </div> 
         );
