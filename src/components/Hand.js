@@ -48,7 +48,7 @@ class Hand extends React.Component{
                     <button className="buttonHand" 
                         disabled={!this.props.canBurn || 
                             this.props.cardsInHand.length === 0 ? true : false || 
-                            this.props.selectedCards.length > 1 ? true : false } 
+                            this.props.selectedCards.length === 0 ? true : false } 
                         onClick = {this.burnTheCard}>
                         Burn card
                     </button>
