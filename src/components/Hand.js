@@ -57,7 +57,7 @@ class Hand extends React.Component{
         return(
             <div className="hand">
                 {this.props.cardsInHand.map((singleCard, index) => 
-                    <ul className = "ulList" onClick = {()=> this.selectCard(singleCard)}>
+                    <ul key={index} className = "ulList" onClick = {()=> this.selectCard(singleCard)}>
                         <Card key={singleCard.id} src={singleCard.src} card={singleCard.card} type={singleCard.type} selected={singleCard.selected}/>
                     </ul>)}
                 <div>
@@ -90,7 +90,6 @@ class Hand extends React.Component{
                         &gt;&gt;&gt;
                     </button>
                 </div>
-                        <div>{JSON.stringify(this.state.selectedCards)}</div>
             </div> 
         );
     }

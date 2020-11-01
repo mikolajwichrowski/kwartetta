@@ -46,7 +46,7 @@ class App extends React.Component{
         CanBurn: true,
       });
     }
-
+y
     takeCard =() => {
       if(!this.state.CanBurn){
         if(!this.state.ShuffledDeck.length){
@@ -150,9 +150,6 @@ class App extends React.Component{
             </div>
           </div>
           <Hand cardsInHand={this.state.CardsInHand} burnedCard={this.state.BurnedCards} burnCardFunction={this.burnCard} placeQuartetFunction={this.placeQuartet} shiftLeft={this.shiftLeft} shiftRight={this.shiftRight} canBurn={this.state.CanBurn} refresh={this.state.Refresh} />
-      <div>{JSON.stringify(this.state)}</div>
-      <div>{JSON.stringify(this.state.ShuffledDeck.length)}</div>
-      <div>{JSON.stringify(images.length)}</div>
         </div>
 
       )
