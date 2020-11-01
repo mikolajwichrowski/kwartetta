@@ -7,50 +7,26 @@ class Hand extends React.Component{
 
     constructor(props){
         super(props);
-        this.state = {
-            selectedCards: [],
-        }
-    }
-
-    selectCard = (card) => {
-        if(!card.selected){
-            card.selected = true;
-            this.setState({
-            selectedCards: this.state.selectedCards.concat(card)
-        })
-        }else{
-            card.selected = false;
-            var selectedcards = this.state.selectedCards
-            const index = selectedcards.findIndex(d => d.id === card.id);
-            if (index > -1) {
-                selectedcards.splice(index, 1);
-            this.setState({
-                selectedCards: selectedcards
-            })
-            }
-        }      
     }
 
     burnTheCard =() =>{
-        this.props.burnCardFunction(this.state.selectedCards);
-        this.setState({
-            selectedCards:[]
-          })
+        this.props.burnCardFunction(this.props.selectedCards);
     }
 
     placeQuartet =() =>{
-        this.props.placeQuartetFunction(this.state.selectedCards);
-        this.setState({
-            selectedCards: []
-        })
+        this.props.placeQuartetFunction(this.props.selectedCards);
     }
 
     shiftLeft =() =>{
-        this.props.shiftLeft(this.state.selectedCards)
+        this.props.shiftLeft(this.props.selectedCards)
     }
 
     shiftRight =()=>{
-        this.props.shiftRight(this.state.selectedCards)
+        this.props.shiftRight(this.props.selectedCards)
+    }
+
+    selectCard = (card) => {
+        this.props.selectCard(card)
     }
 
     render(){
@@ -63,29 +39,29 @@ class Hand extends React.Component{
                 <div>
                     <button className="buttonHand" 
                         disabled={this.props.cardsInHand.length === 0 || 
-                            this.state.selectedCards[0] === this.props.cardsInHand[0] ||
-                            this.state.selectedCards.length  > 1 ||
-                            this.state.selectedCards.length === 0 ? true : false} 
+                            this.props.selectedCards[0] === this.props.cardsInHand[0] ||
+                            this.props.selectedCards.length  > 1 ||
+                            this.props.selectedCards.length === 0 ? true : false} 
                         onClick={this.shiftLeft}>
                         &lt;&lt;&lt;
                     </button>
                     <button className="buttonHand" 
                         disabled={!this.props.canBurn || 
                             this.props.cardsInHand.length === 0 ? true : false || 
-                            this.state.selectedCards.length > 1 ? true : false } 
+                            this.props.selectedCards.length > 1 ? true : false } 
                         onClick = {this.burnTheCard}>
                         Burn card
                     </button>
                     <button className="buttonHand" 
-                        disabled={this.state.selectedCards.length === 4 ? false : true} 
+                        disabled={this.props.selectedCards.length === 4 ? false : true} 
                         onClick = {this.placeQuartet}>
                         Place Quartet
                     </button>
                     <button className="buttonHand" 
                         disabled={this.props.cardsInHand.length === 0 || 
-                            this.state.selectedCards[this.state.selectedCards.length - 1] === this.props.cardsInHand[this.props.cardsInHand.length - 1] || 
-                            this.state.selectedCards.length === 0 || 
-                            this.state.selectedCards.length  > 1 ? true : false} 
+                            this.props.selectedCards[this.props.selectedCards.length - 1] === this.props.cardsInHand[this.props.cardsInHand.length - 1] || 
+                            this.props.selectedCards.length === 0 || 
+                            this.props.selectedCards.length  > 1 ? true : false} 
                         onClick = {this.shiftRight}>
                         &gt;&gt;&gt;
                     </button>

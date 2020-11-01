@@ -16,6 +16,7 @@ class App extends React.Component{
         BurnedCards:[],
         Quartets: [],
         CanBurn: true,
+        SelectedCards: []
       };
     }
     
@@ -32,7 +33,7 @@ class App extends React.Component{
     startGame =() => {
       const copyOfImages = [...images]
       const shuffledCards = this.shuffleCards(copyOfImages);
-      console.log(shuffledCards)
+      this.deselectCards(shuffledCards)
       var items = shuffledCards.slice(0, 8)
       shuffledCards.splice(0,8)
       const openCard = shuffledCards.shift();
@@ -44,13 +45,15 @@ class App extends React.Component{
         PlayField: [],
         Quartets: [],
         CanBurn: true,
+        SelectedCards: []
       });
     }
-y
+
     takeCard =() => {
       if(!this.state.CanBurn){
         if(!this.state.ShuffledDeck.length){
           alert("Het spel is afgelopen je hebt " + this.state.Quartets.length + " kwartetten en er zijn " + this.state.ShuffledDeck.length + " kaarten over." )
+          this.startGame();
         }else{
           this.setState({
             CardsInHand: this.state.CardsInHand.concat(this.state.OpenCard),
@@ -68,7 +71,8 @@ y
           this.setState({
             BurnedCards: this.state.BurnedCards.concat(selectedCards),
             CardsInHand: cardsInHand,
-            CanBurn: false
+            CanBurn: false,
+            SelectedCards: []
           })
         }
       }
@@ -94,9 +98,11 @@ y
         this.setState({
           CardsInHand: cardsInHandCopy,
           Quartets: this.state.Quartets.concat([selectedCards]),
+          SelectedCards: []
         }) 
         if(!cardsInHandCopy.length){
-          alert("Het spel is afgelopen, je hebt " + this.state.Quartets.length + " kwartetten met nog " + this.state.ShuffledDeck.length + " kaarten in het spel")
+          alert("Het spel is afgelopen, je hebt " + this.state.Quartets.length + 1 + " kwartetten met nog " + this.state.ShuffledDeck.length + " kaarten in het spel")
+          this.startGame();
         }
       }else{
         alert("Helaas, geen kwartet!")
@@ -135,6 +141,25 @@ y
       )
     }
 
+    selectCard = (card) => {
+      if(!card.selected){
+          card.selected = true;
+          this.setState({
+          SelectedCards: this.state.SelectedCards.concat(card)
+      })
+      }else{
+          card.selected = false;
+          var selectedcards = this.state.SelectedCards
+          const index = selectedcards.findIndex(d => d.id === card.id);
+          if (index > -1) {
+              selectedcards.splice(index, 1);
+          this.setState({
+              SelectedCards: selectedcards
+          })
+          }
+      }      
+    }
+
     render(){
       return(
         <div>
@@ -149,9 +174,16 @@ y
               <button disabled={this.state.CanBurn || this.state.CardsInHand < 8} type="button" onClick={this.takeCard}>Take card</button>
             </div>
           </div>
-          <Hand cardsInHand={this.state.CardsInHand} burnedCard={this.state.BurnedCards} burnCardFunction={this.burnCard} placeQuartetFunction={this.placeQuartet} shiftLeft={this.shiftLeft} shiftRight={this.shiftRight} canBurn={this.state.CanBurn} refresh={this.state.Refresh} />
+          <Hand cardsInHand={this.state.CardsInHand} 
+                burnedCard={this.state.BurnedCards} 
+                burnCardFunction={this.burnCard} 
+                placeQuartetFunction={this.placeQuartet} 
+                shiftLeft={this.shiftLeft} shiftRight={this.shiftRight} 
+                canBurn={this.state.CanBurn} 
+                selectedCards={this.state.SelectedCards}
+                selectCard={this.selectCard}
+                 />
         </div>
-
       )
     }
 
