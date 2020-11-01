@@ -10,15 +10,10 @@ class Hand extends React.Component{
         this.state = {
             selectedCards: [],
         }
-        if(props.refresh === true){
-            this.state ={
-                selectedCards: [],
-            }
-        }
     }
 
     selectCard = (card) => {
-        if(!card.selected === true){
+        if(!card.selected){
             card.selected = true;
             this.setState({
             selectedCards: this.state.selectedCards.concat(card)
@@ -29,7 +24,6 @@ class Hand extends React.Component{
             const index = selectedcards.findIndex(d => d.id === card.id);
             if (index > -1) {
                 selectedcards.splice(index, 1);
-              
             this.setState({
                 selectedCards: selectedcards
             })
@@ -62,7 +56,7 @@ class Hand extends React.Component{
     render(){
         return(
             <div className="hand">
-                {this.props.cardsInHand.map((singleCard) => 
+                {this.props.cardsInHand.map((singleCard, index) => 
                     <ul className = "ulList" onClick = {()=> this.selectCard(singleCard)}>
                         <Card key={singleCard.id} src={singleCard.src} card={singleCard.card} type={singleCard.type} selected={singleCard.selected}/>
                     </ul>)}
@@ -96,6 +90,7 @@ class Hand extends React.Component{
                         &gt;&gt;&gt;
                     </button>
                 </div>
+                        <div>{JSON.stringify(this.state.selectedCards)}</div>
             </div> 
         );
     }

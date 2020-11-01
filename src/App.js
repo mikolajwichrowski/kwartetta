@@ -30,7 +30,8 @@ class App extends React.Component{
     };
     
     startGame =() => {
-      const shuffledCards = this.shuffleCards(images);
+      const copyOfImages = [...images]
+      const shuffledCards = this.shuffleCards(copyOfImages);
       console.log(shuffledCards)
       var items = shuffledCards.slice(0, 8)
       shuffledCards.splice(0,8)
@@ -149,6 +150,9 @@ class App extends React.Component{
             </div>
           </div>
           <Hand cardsInHand={this.state.CardsInHand} burnedCard={this.state.BurnedCards} burnCardFunction={this.burnCard} placeQuartetFunction={this.placeQuartet} shiftLeft={this.shiftLeft} shiftRight={this.shiftRight} canBurn={this.state.CanBurn} refresh={this.state.Refresh} />
+      <div>{JSON.stringify(this.state)}</div>
+      <div>{JSON.stringify(this.state.ShuffledDeck.length)}</div>
+      <div>{JSON.stringify(images.length)}</div>
         </div>
 
       )
